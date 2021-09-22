@@ -4,7 +4,7 @@
  * @Autor: Liyb
  * @Date: 2021-08-24 17:38:31
  * @LastEditors: Liyb
- * @LastEditTime: 2021-09-22 08:47:04
+ * @LastEditTime: 2021-09-22 19:59:44
  */
 import React, { useState, MutableRefObject, useRef } from 'react';
 import { Form, Grid } from 'semantic-ui-react';
@@ -23,6 +23,7 @@ export default function Main (props) {
   const [strHash, setStrHassh] = useState('');
   const [strContent, setStrContent] = useState('');
   const inputEl = useRef(null);
+  const [fileName, setfileName] = useState('');
 
   const bufferToHex = buffer => {
     return Array.from(new Uint8Array(buffer))
@@ -45,8 +46,16 @@ export default function Main (props) {
     this.file = file;
     return false;
   };
-  const saveTextBlobOnIpfs = (blob) => {
-    return new Promise(function (resolve, reject) {
+  const saveTextBlobOnIpfs = (reader) => {
+    let ipfsId;
+    console.log(reader);
+    const buffer = Buffer.from(reader.result);
+    ipfs.add(buffer).then(response => {
+      console.log(response);
+      ipfsId = response.path;
+      setStrHassh(ipfsId);
+    });
+    /* return new Promise(function (resolve, reject) {
       const descBuffer = Buffer.from(blob, 'utf-8');
       ipfs.add(descBuffer).then((response) => {
         console.log(response);
@@ -55,16 +64,14 @@ export default function Main (props) {
         console.error(err);
         reject(err);
       });
-    });
+    }); */
   };
   const uploadIpfs = () => {
-    const ipfsContent = inputEl.current.input.defaultValue;
-    console.log('123', ipfsContent);
-    console.log('123', inputEl);
-    saveTextBlobOnIpfs(ipfsContent).then((hash) => {
-      console.log(hash);
-      setStrHassh(hash);
-    });
+    /*  const ipfsContent = inputEl.current.input.defaultValue; */
+    console.log('13', fileName);
+    const reader = new window.FileReader();
+    reader.onloadend = () => saveTextBlobOnIpfs(reader);
+    reader.readAsArrayBuffer(fileName);
   };
   const Utf8ArrayToStr = (array) => {
     console.log(array);
@@ -105,9 +112,6 @@ export default function Main (props) {
     }
     return out;
   };
-  const onChange = (e) => {
-    console.log(e);
-  };
   return (
     <Grid.Column width={8}>
       <h1>上传文件信息</h1>
@@ -129,15 +133,17 @@ export default function Main (props) {
             type='file'
             label='上传文件'
             value=""
-            onChange = {onChange}/*  */
+            onChange = {(e) => {
+              setfileName(e.target.files[0]);
+            }}/*  */
         />
         </a>
-        <p></p>
+        <p>{fileName.name}</p>
         <Button type="primary"
           onClick= { uploadIpfs }>
               提交到ipfs
         </Button>
-        <p>{strHash}</p>
+        <p>{}</p>
         <Button type="primary"
         onClick = {() => {
           console.log('ipfs read data', ipfs);
@@ -150,7 +156,10 @@ export default function Main (props) {
         }}>
           read data
         </Button>
-        <p>{strContent}</p>
+        <a target="_blank"
+            href={'https://gateway.dandelionwallet.com/ipfs/' + strHash}>
+            {strHash}
+          </a>
         <div style={{ overflowWrap: 'break-word' }}>{status}</div>
         </Form.Field>
       </Form>
