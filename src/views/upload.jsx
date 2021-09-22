@@ -4,7 +4,7 @@
  * @Autor: Liyb
  * @Date: 2021-08-24 17:38:31
  * @LastEditors: Liyb
- * @LastEditTime: 2021-08-24 19:26:25
+ * @LastEditTime: 2021-09-21 17:31:47
  */
 import React, { useState, createRef } from 'react';
 import { Container, Dimmer, Loader, Grid, Sticky, Message } from 'semantic-ui-react';
@@ -14,15 +14,6 @@ import 'antd/dist/antd';
 import { SubstrateContextProvider, useSubstrate } from '../substrate-lib';
 import { DeveloperConsole } from '../substrate-lib/components';
 
-import AccountSelector from '../AccountSelector';
-import Balances from '../Balances';
-import BlockNumber from '../BlockNumber';
-import Events from '../Events';
-import Interactor from '../Interactor';
-import Metadata from '../Metadata';
-import NodeInfo from '../NodeInfo';
-import TemplateModule from '../TemplateModule';
-import Transfer from '../Transfer';
 import Upgrade from '../Upgrade';
 
 function Main () {
@@ -32,7 +23,6 @@ function Main () {
     accountAddress &&
     keyringState === 'READY' &&
     keyring.getPair(accountAddress);
-
   const loader = text =>
     <Dimmer active>
       <Loader size='small'>{text}</Loader>
@@ -49,7 +39,7 @@ function Main () {
     </Grid>;
 
   if (apiState === 'ERROR') return message(apiError);
-  else if (apiState !== 'READY') return loader('Connecting to Substrate');
+  else if (apiState !== 'READY') return loader('Connecting to Substrate' + apiState);
 
   if (keyringState !== 'READY') {
     return loader('Loading accounts (please review any extension\'s authorization)');

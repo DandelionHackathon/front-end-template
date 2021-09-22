@@ -4,7 +4,7 @@
  * @Autor: Liyb
  * @Date: 2021-08-24 17:38:31
  * @LastEditors: Liyb
- * @LastEditTime: 2021-09-17 23:33:46
+ * @LastEditTime: 2021-09-22 08:47:04
  */
 import React, { useState, MutableRefObject, useRef } from 'react';
 import { Form, Grid } from 'semantic-ui-react';
@@ -13,7 +13,7 @@ import { Button, Input, Upload } from 'antd';
 import '../src/views/style/layout.css';
 
 const ipfsApi = require('ipfs-http-client');
-const ipfs = ipfsApi.create({ host: 'localhost', port: '4001', protocal: 'http' });
+const ipfs = ipfsApi.create({ host: '217.197.161.88', port: '5001', protocal: 'http' });
 console.log(ipfs);
 
 export default function Main (props) {
@@ -39,12 +39,18 @@ export default function Main (props) {
 
     fileReader.readAsArrayBuffer(file);
   };
+  const beforeUpload = (file, fileList) => {
+    console.log('fileList', file);
+    this.fileName = file.name;
+    this.file = file;
+    return false;
+  };
   const saveTextBlobOnIpfs = (blob) => {
     return new Promise(function (resolve, reject) {
       const descBuffer = Buffer.from(blob, 'utf-8');
       ipfs.add(descBuffer).then((response) => {
         console.log(response);
-        resolve(response[0].hash);
+        resolve(response.path);
       }).catch((err) => {
         console.error(err);
         reject(err);
@@ -107,6 +113,14 @@ export default function Main (props) {
       <h1>上传文件信息</h1>
       <Form>
         <Form.Field style={{ width: 500, height: 100 }}>
+          {/* <Upload
+            name="file"
+            showUploadList="false"
+            multiple="false"
+            beforeUpload={beforeUpload}
+          >
+
+          </Upload> */}
         <a href="javascript:;" className="file gradient">选择文件
         <Input
             ref = {inputEl}
@@ -115,7 +129,7 @@ export default function Main (props) {
             type='file'
             label='上传文件'
             value=""
-            onChange = {onChange}
+            onChange = {onChange}/*  */
         />
         </a>
         <p></p>
