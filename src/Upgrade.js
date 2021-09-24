@@ -4,12 +4,13 @@
  * @Autor: Liyb
  * @Date: 2021-08-24 17:38:31
  * @LastEditors: Liyb
- * @LastEditTime: 2021-09-22 19:59:44
+ * @LastEditTime: 2021-09-24 14:38:37
  */
 import React, { useState, MutableRefObject, useRef } from 'react';
 import { Form, Grid } from 'semantic-ui-react';
 import { TxButton } from './substrate-lib/components';
-import { Button, Input, Upload } from 'antd';
+import { Icon, Button, Input, Upload } from 'antd';
+
 import '../src/views/style/layout.css';
 
 const ipfsApi = require('ipfs-http-client');
@@ -113,7 +114,7 @@ export default function Main (props) {
     return out;
   };
   return (
-    <Grid.Column width={8}>
+    <Grid.Column width={16} centered style={{ height: 250 }}>
       <h1>上传文件信息</h1>
       <Form>
         <Form.Field style={{ width: 500, height: 100 }}>
@@ -125,7 +126,8 @@ export default function Main (props) {
           >
 
           </Upload> */}
-        <a href="javascript:;" className="file gradient">选择文件
+        <a href="javascript:;" className="file gradient">
+        <Icon type="plus" className="Icon"/>
         <Input
             ref = {inputEl}
             id='file'
@@ -140,21 +142,9 @@ export default function Main (props) {
         </a>
         <p>{fileName.name}</p>
         <Button type="primary"
+         style={{ width: 200, height: 50, borderRadius: 20, textAlign: 'center' }}
           onClick= { uploadIpfs }>
-              提交到ipfs
-        </Button>
-        <p>{}</p>
-        <Button type="primary"
-        onClick = {() => {
-          console.log('ipfs read data', ipfs);
-          ipfs.cat(strHash).then((stream) => {
-            console.log(stream);
-            const strContent = Utf8ArrayToStr(stream);
-            setStrContent(strContent);
-            console.log(strContent);
-          });
-        }}>
-          read data
+              提交
         </Button>
         <a target="_blank"
             href={'https://gateway.dandelionwallet.com/ipfs/' + strHash}>

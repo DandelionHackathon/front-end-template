@@ -4,7 +4,7 @@
  * @Autor: Liyb
  * @Date: 2021-08-24 17:38:31
  * @LastEditors: Liyb
- * @LastEditTime: 2021-09-21 17:31:47
+ * @LastEditTime: 2021-09-24 14:05:51
  */
 import React, { useState, createRef } from 'react';
 import { Container, Dimmer, Loader, Grid, Sticky, Message } from 'semantic-ui-react';
@@ -15,6 +15,8 @@ import { SubstrateContextProvider, useSubstrate } from '../substrate-lib';
 import { DeveloperConsole } from '../substrate-lib/components';
 
 import Upgrade from '../Upgrade';
+import Interactor from '../Interactor';
+import Events from '../Events'
 
 function Main () {
   const [accountAddress, setAccountAddress] = useState(null);
@@ -53,6 +55,8 @@ function Main () {
         <Grid stackable columns='equal'>
           <Grid.Row>
             <Upgrade accountPair={accountPair} />
+            <Interactor/>
+            <Events/>
           </Grid.Row>
         </Grid>
       </Container>

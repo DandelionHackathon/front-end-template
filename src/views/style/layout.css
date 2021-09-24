@@ -134,15 +134,18 @@
 .file {
   position: relative;
   display: inline-block;
-  background: #ccc;
+  background: transparent;
   border: 1px solid #333;
   padding: 4px 20px;
   overflow: hidden;
   text-decoration: none;
   text-indent: 0;
+  width: 200px;
+  height: 100px;
   line-height: 20px;
-  border-radius: 20px;
+  /* border-radius: 1px; */
   color: #333;
+  position: relative;
   font-size: 13px;
 
 }
@@ -152,5 +155,12 @@
   right: 0;
   top: 0;
   opacity: 0;
+}
+.file .Icon {
+  left: 40%;
+    text-align: center;
+    position: absolute;
+    top: 27%;
+    font-size: 35px;
 }
 /* 页面布局end */
