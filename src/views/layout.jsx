@@ -8,6 +8,7 @@ import Allcomponent from './Allcomponent'
 const { SubMenu } = Menu;
 const {TabPane} = Tabs
 const { Header, Footer, Sider, Content } = Layout;
+import {Provider} from 'react-redux'
 
 
 export default class NavLeft extends Component {
