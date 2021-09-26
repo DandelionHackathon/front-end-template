@@ -1,5 +1,23 @@
 {
   "APP_NAME": "substrate-front-end-tutorial",
   "DEVELOPMENT_KEYRING": true,
-  "RPC": {}
+  "RPC": {
+    "dandelion": {
+      "getFileHash": {
+        "description":"Get the prove file hash.",
+        "params": [
+          {
+            "name": "owner",
+            "type": "AccountId"
+          },
+          {
+            "name": "at",
+            "type": "Hash",
+            "isOptinal": true
+          }
+        ],
+        "type":"Bytes"
+      }
+    }
+  }
 }
