@@ -13,7 +13,7 @@
           {
             "name": "at",
             "type": "Hash",
-            "isOptinal": true
+            "isOptional": true
           }
         ],
         "type":"Bytes"
