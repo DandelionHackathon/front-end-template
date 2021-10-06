@@ -4,7 +4,7 @@
  * @Autor: Liyb
  * @Date: 2021-08-24 17:38:31
  * @LastEditors: Liyb
- * @LastEditTime: 2021-09-27 09:00:02
+ * @LastEditTime: 2021-09-27 18:19:07
  */
 import React, { useState, MutableRefObject, useRef } from 'react';
 import { Form, Grid } from 'semantic-ui-react';
@@ -14,7 +14,7 @@ import { Icon, Button, Input, Upload } from 'antd';
 import '../src/views/style/layout.css';
 
 const ipfsApi = require('ipfs-http-client');
-const ipfs = ipfsApi.create({ host: '217.197.161.88', port: '5001', protocal: 'http' });
+const ipfs = ipfsApi.create({ host: 'ipfs.dandelionwallet.com', protocal: 'https' });
 console.log(ipfs);
 
 export default function Main (props) {
