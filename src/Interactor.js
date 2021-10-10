@@ -8,6 +8,7 @@ const argIsOptional = (arg) =>
   arg.type.toString().startsWith('Option<');
 
 function Main (props) {
+  console.log(props);
   const { api, jsonrpc } = useSubstrate();
   const { accountPair } = props;
   const [status, setStatus] = useState(null);
@@ -245,6 +246,7 @@ function Main (props) {
 }
 
 function InteractorSubmit (props) {
+  console.log(props);
   const { attrs: { interxType } } = props;
   if (interxType === 'QUERY') {
     return <TxButton

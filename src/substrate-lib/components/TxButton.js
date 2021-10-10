@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useImperativeHandle } from 'react';
 import PropTypes from 'prop-types';
 import { Button } from 'semantic-ui-react';
 import { web3FromSource } from '@polkadot/extension-dapp';
@@ -6,21 +6,21 @@ import { web3FromSource } from '@polkadot/extension-dapp';
 import { useSubstrate } from '../';
 import utils from '../utils';
 
-function TxButton ({
-  accountPair = null,
-  label,
-  setStatus,
-  color = 'blue',
-  style = null,
-  type = 'QUERY',
-  attrs = null,
-  disabled = false
-}) {
+function TxButton (props) {
   // Hooks
   const { api } = useSubstrate();
   const [unsub, setUnsub] = useState(null);
   const [sudoKey, setSudoKey] = useState(null);
-
+  console.log('ref', props.cRef);
+  const ref = props.cRef;
+  const accountPair = props.accountPair;
+  const label = props.label;
+  const setStatus = props.setStatus;
+  const color = props.color;
+  const style = props.style;
+  const type = props.type;
+  const attrs = props.attrs;
+  const disabled = false;
   const { palletRpc, callable, inputParams, paramFields } = attrs;
 
   const isQuery = () => type === 'QUERY';
@@ -117,8 +117,10 @@ function TxButton ({
     setUnsub(() => unsub);
   };
 
-  const queryResHandler = result =>
+  const queryResHandler = result => {
+    console.log('所有的结果', result.toString());
     result.isNone ? setStatus('None') : setStatus(result.toString());
+  };
 
   const query = async () => {
     const transformed = transformParams(paramFields, inputParams);
@@ -136,8 +138,28 @@ function TxButton ({
     const result = api.consts[palletRpc][callable];
     result.isNone ? setStatus('None') : setStatus(result.toString());
   };
+  useImperativeHandle(ref, () => ({
+    // changeVal 就是暴露给父组件的方法
+    changeVal: (newVal) => {
+      console.log(12312);
+      if (unsub) {
+        unsub();
+        setUnsub(null);
+      }
 
-  const transaction = async () => {
+      setStatus('Sending...');
+
+      (isSudo() && sudoTx()) ||
+    (isUncheckedSudo() && uncheckedSudoTx()) ||
+    (isSigned() && signedTx()) ||
+    (isUnsigned() && unsignedTx()) ||
+    (isQuery() && query()) ||
+    (isRpc() && rpc()) ||
+    (isConstant() && constant());
+    }
+  }));
+  const transaction = () => {
+    console.log(12312);
     if (unsub) {
       unsub();
       setUnsub(null);
@@ -153,7 +175,6 @@ function TxButton ({
     (isRpc() && rpc()) ||
     (isConstant() && constant());
   };
-
   const transformParams = (paramFields, inputParams, opts = { emptyAsNull: true }) => {
     // if `opts.emptyAsNull` is true, empty param value will be added to res as `null`.
     //   Otherwise, it will not be added
@@ -219,8 +240,8 @@ function TxButton ({
       style={style}
       type='submit'
       onClick={transaction}
-      disabled={ disabled || !palletRpc || !callable || !allParamsFilled() ||
-        ((isSudo() || isUncheckedSudo()) && !isSudoer(accountPair)) }
+      /* disabled={ disabled || !palletRpc || !callable || !allParamsFilled() ||
+        ((isSudo() || isUncheckedSudo()) && !isSudoer(accountPair)) } */
     >
       {label}
     </Button>
@@ -243,6 +264,7 @@ TxButton.propTypes = {
 };
 
 function TxGroupButton (props) {
+  console.log('按钮', props);
   return (
     <Button.Group>
       <TxButton

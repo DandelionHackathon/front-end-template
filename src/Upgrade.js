@@ -4,7 +4,7 @@
  * @Autor: Liyb
  * @Date: 2021-08-24 17:38:31
  * @LastEditors: Liyb
- * @LastEditTime: 2021-09-27 18:19:07
+ * @LastEditTime: 2021-10-10 21:59:40
  */
 import React, { useState, MutableRefObject, useRef } from 'react';
 import { Form, Grid } from 'semantic-ui-react';
@@ -21,6 +21,7 @@ export default function Main (props) {
   const [status, setStatus] = useState('');
   const [proposal, setProposal] = useState({});
   const { accountPair } = props;
+  const { getData } = props;
   const [strHash, setStrHassh] = useState('');
   const [strContent, setStrContent] = useState('');
   const inputEl = useRef(null);
@@ -55,6 +56,7 @@ export default function Main (props) {
       console.log(response);
       ipfsId = response.path;
       setStrHassh(ipfsId);
+      getData(ipfsId);
     });
   };
   const uploadIpfs = () => {
@@ -104,7 +106,7 @@ export default function Main (props) {
     return out;
   };
   return (
-    <Grid.Column width={16} centered style={{ height: 250 }}>
+    <Grid.Column width={8} centered style={{ height: 250 }}>
       <h1>上传文件信息</h1>
       <Form>
         <Form.Field style={{ width: 500, height: 100 }}>
@@ -126,7 +128,7 @@ export default function Main (props) {
         <Button type="primary"
          style={{ width: 200, height: 50, borderRadius: 20, textAlign: 'center' }}
           onClick= { uploadIpfs }>
-              提交
+              UPLOAD
         </Button>
         <a target="_blank"
             href={'https://gateway.dandelionwallet.com/ipfs/' + strHash}>
