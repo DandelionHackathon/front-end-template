@@ -16,7 +16,7 @@
             "isOptional": true
           }
         ],
-        "type":"Bytes"
+        "type":"Vec<Vec<u8>>"
       }
     }
   }
