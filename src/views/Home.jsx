@@ -4,7 +4,7 @@
  * @Autor: Liyb
  * @Date: 2021-08-24 17:38:31
  * @LastEditors: Liyb
- * @LastEditTime: 2021-08-24 19:26:25
+ * @LastEditTime: 2021-10-16 16:44:02
  */
 import React, { useState, createRef } from 'react';
 import { Container, Dimmer, Loader, Grid, Sticky, Message } from 'semantic-ui-react';
@@ -37,7 +37,7 @@ function Main () {
     <Dimmer active>
       <Loader size='small'>{text}</Loader>
     </Dimmer>;
-
+  console.log('用户地址',accountPair)
   const message = err =>
     <Grid centered columns={2} padded>
       <Grid.Column>
@@ -59,8 +59,8 @@ function Main () {
 
   return (
     <div ref={contextRef}>
-      <Sticky context={contextRef}>
-        <AccountSelector setAccountAddress={setAccountAddress} />
+      <Sticky style={{marginBottom:"20px"}} >
+        <AccountSelector  context={contextRef} setAccountAddress={setAccountAddress} />
       </Sticky>
       <Container>
         <Grid stackable columns='equal'>
@@ -75,11 +75,7 @@ function Main () {
           </Grid.Row>
           <Grid.Row>
             <Transfer accountPair={accountPair} />
-            <Upgrade accountPair={accountPair} />
-          </Grid.Row>
-          <Grid.Row>
             <Interactor accountPair={accountPair} />
-            <Events />
           </Grid.Row>
           <Grid.Row>
             <TemplateModule accountPair={accountPair} />

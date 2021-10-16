@@ -80,7 +80,7 @@ function Main (props) {
             }}
             value={accountSelected}
           ></Dropdown>
-            <Button type="primary" circular size='large' onClick={() => { createAccount(1231); } }>添加用户</Button>
+            {/* <Button type="primary" circular size='large' onClick={() => { createAccount(1231); } }>添加用户</Button> */}
         </Menu.Menu>
       </Container>
     </Menu>

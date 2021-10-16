@@ -4,15 +4,13 @@
  * @Autor: Liyb
  * @Date: 2021-09-09 15:08:55
  * @LastEditors: Liyb
- * @LastEditTime: 2021-09-09 16:36:47
+ * @LastEditTime: 2021-10-16 16:38:05
  */
 import Home from './Home';
-import User from './user'
-import React, { useState, createRef } from 'react';
-import AccountSelector from '../AccountSelector';
+import User from './user';
+import React from 'react';
 import Upload from './upload';
-import { Container, Dimmer, Loader, Grid, Sticky, Message } from 'semantic-ui-react';
-import { SubstrateContextProvider, useSubstrate } from '../substrate-lib';
+import Workspace from './workspace';
 
 // 在上面的对象数组中，查找在菜单中被选中的组件，条件渲染
 function AllComponent (props) {
@@ -33,6 +31,11 @@ function AllComponent (props) {
       key: 3,
       name: 'upgarde',
       component: <Upload />
+    },
+    {
+      key: 13,
+      name: 'workspace',
+      component: <Workspace />
     }
   ];
   selectedComponent = keyComponent.map((item) => {

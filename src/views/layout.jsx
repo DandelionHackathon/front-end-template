@@ -27,7 +27,7 @@ export default class NavLeft extends Component {
     handleClick = (e) => {
       console.log(e)
       this.setState({
-        current: e.key
+        current: e.key || '1'
       })
     } 
     onOpenChange = (openKeys) => {
@@ -52,11 +52,12 @@ export default class NavLeft extends Component {
               <div className="logo" style={{backgroundColor:'white',margin:'0'}} />
                   <Menu
                     mode="inline"
+                    multiple
                     defaultSelectedKeys={['1']}
                     defaultOpenKeys={['sub1']}
                     style={{ height: '100%', borderRight: 0 }}
                     onClick = {this.handleClick}
-                    selectedKeys = {[this.state.current]}
+                    selectedKeys = {[this.state.current || '1']}
                   >
                     <Menu.Item key="1">
                       <Icon type="cloud-o"/>
@@ -69,8 +70,13 @@ export default class NavLeft extends Component {
                     </Menu.Item>
                     <Menu.Item key="3">
                     <Icon type="unordered-list" />
-                          <span>用户信息</span>
+                          <span>上传材料信息</span>
                     </Menu.Item>
+                    <Menu.Item key="13">
+                    <Icon type="unordered-list" />
+                          <span>工作台</span>
+                    </Menu.Item>
+                    
                   </SubMenu>
                   <SubMenu key="sub2"  title={<span><Icon type="unordered-list" /><span>历史记录</span></span>}>
                     <Menu.Item key="4">捐助历史记录</Menu.Item>
@@ -104,7 +110,7 @@ export default class NavLeft extends Component {
                     minHeight: 100
                   }}
                 >
-                  <Allcomponent selected = {this.state.current}/>
+                  <Allcomponent selected = {this.state.current || '1'}/>
                 </Content>
               </Layout>
           </Layout>

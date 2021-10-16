@@ -4,7 +4,7 @@
  * @Autor: Liyb
  * @Date: 2021-08-24 17:38:31
  * @LastEditors: Liyb
- * @LastEditTime: 2021-10-10 21:58:25
+ * @LastEditTime: 2021-10-16 22:02:06
  */
 import React, { useState, createRef,useRef,useEffect  } from 'react';
 import { Container, Dimmer, Loader, Grid, Sticky, Message } from 'semantic-ui-react';
@@ -19,7 +19,6 @@ import Upgrade from '../Upgrade';
 import Interactor from '../Interactor';
 import Events from '../Events'
 import { TxButton, TxGroupButton } from '../substrate-lib/components';
-import {Query} from '../Query'
 
 function Main () {
   const [accountAddress, setAccountAddress] = useState(null);
@@ -66,40 +65,18 @@ function Main () {
   if (keyringState !== 'READY') {
     return loader('Loading accounts (please review any extension\'s authorization)');
   }
+  
   const getData = (data) => {
     setHash(data)
     setInputParams([{type: "Bytes",value:data}])
     setParamFields([{name: "fileHash", type: "Bytes", optional: false}])
     buttonRef.current.changeVal()
   }
-  const gainData = (data) => {
-    setInterxType('QUERY')
-    setCallable("allProvesArray")
-    setType('QUERY')
-    setInfos([])
-    let res = []
-      console.log('数据',status)
-      setTimeout(() => {
-        let i = 1
-        while (i < 20) {
-          setInputParams([{type: "8",value:i.toString()}])
-          setParamFields([{name: "8", type: "8", optional: false}])
-          buttonRef.current.changeVal()
-          if (status == null) break
-          if (status.indexOf('0x00000') > -1) {
-           break
-          } 
-          i++
-        }
-        console.log(infos)
-      }, 1000);
-  }
   const contextRef = createRef();
-  console.log(contextRef,buttonRef)
 
   return (
     <div ref={contextRef}>
-       <Sticky context={contextRef}>
+       <Sticky style={{marginBottom:"20px"}} context={contextRef}>
         <AccountSelector setAccountAddress={setAccountAddress} />
       </Sticky>
       <Container>
@@ -117,7 +94,6 @@ function Main () {
             type={type}
             color='blue'/>
             <Events/>
-            <Query accountPair={accountPair} gainData = {gainData} infos = {infos}/>
           </Grid.Row>
         </Grid>
       </Container>

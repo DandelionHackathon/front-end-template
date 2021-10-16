@@ -1,3 +1,11 @@
+/*
+ * @Description:
+ * @Version: 2.0
+ * @Autor: Liyb
+ * @Date: 2021-08-24 17:38:31
+ * @LastEditors: Liyb
+ * @LastEditTime: 2021-10-16 22:04:34
+ */
 import React, { useState } from 'react';
 import { Form, Input, Grid, Label, Icon } from 'semantic-ui-react';
 import { TxButton } from './substrate-lib/components';
@@ -47,7 +55,7 @@ export default function Main (props) {
           />
         </Form.Field>
         <Form.Field style={{ textAlign: 'center' }}>
-          <TxButton
+          {/* <TxButton
             accountPair={accountPair}
             label='Submit'
             type='SIGNED-TX'
@@ -58,7 +66,7 @@ export default function Main (props) {
               inputParams: [addressTo, amount],
               paramFields: [true, true]
             }}
-          />
+          /> */}
         </Form.Field>
         <div style={{ overflowWrap: 'break-word' }}>{status}</div>
       </Form>

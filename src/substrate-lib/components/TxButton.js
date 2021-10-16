@@ -11,7 +11,7 @@ function TxButton (props) {
   const { api } = useSubstrate();
   const [unsub, setUnsub] = useState(null);
   const [sudoKey, setSudoKey] = useState(null);
-  console.log('ref', props.cRef);
+  console.log('ref', props);
   const ref = props.cRef;
   const accountPair = props.accountPair;
   const label = props.label;
