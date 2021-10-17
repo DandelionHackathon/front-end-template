@@ -4,12 +4,13 @@
  * @Autor: Liyb
  * @Date: 2021-08-24 17:38:31
  * @LastEditors: Liyb
- * @LastEditTime: 2021-10-16 23:15:24
+ * @LastEditTime: 2021-10-17 21:57:04
  */
 import React, { useState, createRef,useRef,useEffect  } from 'react';
 import { Container, Dimmer, Loader, Grid, Sticky, Message } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
 import 'antd/dist/antd';
+import {Table} from 'antd'
 
 import { SubstrateContextProvider, useSubstrate } from '../substrate-lib';
 import { DeveloperConsole } from '../substrate-lib/components';
@@ -33,7 +34,8 @@ function Main () {
   const [paramFields,setParamFields] = useState([]);
   const [status, setStatus] = useState(null);
   const [result,setResult] = useState(null);
-  const [infos,setInfos] = useState([]) 
+  const [infos,setInfos] = useState([])
+  const [dataSource, setDataSource] = useState([]); 
   const [inputParams,setInputParams] = useState([])
   const buttonRef = useRef(null);
   const accountPair =
@@ -67,8 +69,14 @@ function Main () {
   if (keyringState !== 'READY') {
     return loader('Loading accounts (please review any extension\'s authorization)');
   }
+  const columns = [{
+    title: 'user data',
+    dataIndex: 'Hash',
+    render: val => <a target="_blank" href={'https://gateway.dandelionwallet.com/ipfs/' + val}>{val}</a>
+  }];
   const gainData = (data) =>{
     return new Promise(resolve =>{
+      let resultInfo = []
       setInfos([])
       setInterxType('RPC')
       setCallable("getFileHash")
@@ -78,8 +86,18 @@ function Main () {
       setTimeout(() => {
         buttonRef.current.changeVal()
       }, 500);
-      console.log('结果',infos)
-      resolve(infos)
+      if (infos.length > 0) {
+        resultInfo = infos[0].split(",")
+        for(let i = 0; i < resultInfo.length;i++) {
+          if(i === resultInfo.length - 1) {
+            resultInfo[resultInfo.length - 1] =  resultInfo[resultInfo.length - 1].substring(1,resultInfo[resultInfo.length - 1].length - 1)
+            break
+          }
+          resultInfo[i] = resultInfo[i].substr(1)
+        }
+        console.log('结果',resultInfo)
+        resolve(resultInfo)
+      }
     })
   }
   /* const gainData = (data) => {
@@ -114,7 +132,7 @@ function Main () {
       <Container>
         <Grid stackable columns='equal'>
           <Grid.Row>
-            <Query accountPair={accountPair} gainData = {gainData} infos = {infos}/>
+            <Query accountPair={accountPair} gainData = {gainData} setDataSource = {setDataSource} infos = {infos}/>
             <TxButton
             style = {{display: 'none'}} 
             setStatus={setStatus}
@@ -125,7 +143,7 @@ function Main () {
             label='Submit'
             type={type}
             color='blue'/>
-            <Transfer accountPair={accountPair} />
+            <Table style ={{ width:'50%' }} dataSource={dataSource} columns={columns} />
           </Grid.Row>
         </Grid>
       </Container>

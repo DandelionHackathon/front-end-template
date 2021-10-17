@@ -4,7 +4,7 @@
  * @Autor: Liyb
  * @Date: 2021-10-10 17:17:52
  * @LastEditors: Liyb
- * @LastEditTime: 2021-10-16 23:14:30
+ * @LastEditTime: 2021-10-17 21:57:51
  */
 /*
  * @Description:
@@ -16,7 +16,8 @@
  */
 import React, { useState } from 'react';
 import { Grid, Image } from 'semantic-ui-react';
-import { Input, Select } from 'antd';
+import { Input, Select, Table } from 'antd';
+import Transfer from './Transfer';
 
 import '../src/views/style/layout.css';
 
@@ -26,9 +27,11 @@ function Query (props) {
   const [src, setAddress] = useState('');
   const [hashValExact, setHashVal] = useState(['12312']);
   const { gainData } = props;
+  const { setDataSource } = props;
   const infos = ['0x516d64427342706f755a5a7a4d7657686555595171776a70466a3273507445695964354b53707632666479455278', '0x516d63625231747747787a6367646868344e474b5039315338394a34586976796b41365645783350776a736a366b'];
   const { Search } = Input;
   const { Option } = Select;
+  let dataSourceS = [];
   const queryInfo = (value) => {
     gainData(value).then(res => {
       convert(res);
@@ -46,13 +49,19 @@ function Query (props) {
     }
     setHashVal(hashVal);
     console.log('图片地址', hashVal);
+    dataSourceS = hashVal.map(item => {
+      return {
+        Hash: item
+      };
+    });
+    setDataSource(dataSourceS);
   };
   const handleValue = (val) => {
     console.log(val);
     setAddress(val.item);
   };
   return (
-    <Grid.Column width ={7} style={{ height: 250 }}>
+    <Grid.Column width ={8} style={{ height: 250 }}>
       <h1>USER DATA</h1>
       <Search
         enterButton = "QUERY"
@@ -72,9 +81,10 @@ function Query (props) {
         }
         </Select>
       </div>
-      <div style={{ height: '100%', border: '1px solid black', justifyContent: 'center', display: 'flex' }}>
+      <div style={{ margin: '30px 0', height: '100%', border: '1px solid black', justifyContent: 'center', display: 'flex' }}>
         <Image style={{ height: '90%', width: 'auto' }} src={'https://gateway.dandelionwallet.com/ipfs/' + src} alt="invalid image"/>
       </div>
+      <Transfer accountPair={accountPair} />
       </div>
     </Grid.Column>
 
