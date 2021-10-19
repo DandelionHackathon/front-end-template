@@ -4,7 +4,7 @@
  * @Autor: Liyb
  * @Date: 2021-10-10 17:17:52
  * @LastEditors: Liyb
- * @LastEditTime: 2021-10-17 21:57:51
+ * @LastEditTime: 2021-10-19 09:49:58
  */
 /*
  * @Description:
@@ -71,7 +71,7 @@ function Query (props) {
       />
       <div style={{ display: 'flex', height: '80%', flexDirection: 'column' }}>
       <div style={{ width: '50%', marginBottom: '50px' }}>
-        <Select style={{ width: '50%' }}
+        <Select style={{ width: '170%' }}
           onChange={handleValue}
         >
         {
