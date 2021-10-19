@@ -4,7 +4,7 @@
  * @Autor: Liyb
  * @Date: 2021-10-10 17:17:52
  * @LastEditors: Liyb
- * @LastEditTime: 2021-10-19 09:49:58
+ * @LastEditTime: 2021-10-19 10:27:54
  */
 /*
  * @Description:
@@ -69,7 +69,7 @@ function Query (props) {
         onSearch={queryInfo}
         style={{ width: 350, height: 50, borderRadius: 20 }}
       />
-      <div style={{ display: 'flex', height: '80%', flexDirection: 'column' }}>
+      <div style={{ display: 'flex', height: '100%', flexDirection: 'column' }}>
       <div style={{ width: '50%', marginBottom: '50px' }}>
         <Select style={{ width: '170%' }}
           onChange={handleValue}
@@ -81,8 +81,8 @@ function Query (props) {
         }
         </Select>
       </div>
-      <div style={{ margin: '30px 0', height: '100%', border: '1px solid black', justifyContent: 'center', display: 'flex' }}>
-        <Image style={{ height: '90%', width: 'auto' }} src={'https://gateway.dandelionwallet.com/ipfs/' + src} alt="invalid image"/>
+      <div style={{ marginBottom: '30px', height: '100%', border: '1px solid black', justifyContent: 'center', display: 'flex' }}>
+        <iframe style={{ width: '100%', height: '251px' }} src={'https://gateway.dandelionwallet.com/ipfs/' + src} title="preview"></iframe>
       </div>
       <Transfer accountPair={accountPair} />
       </div>
